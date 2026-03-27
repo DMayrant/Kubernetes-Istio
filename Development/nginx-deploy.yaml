@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: nginx-web
+  name: nginx-web
+  namespace: dev
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: nginx-web
+  template:
+    metadata:
+      labels:
+        app: nginx-web
+    spec:
+      serviceAccountName: dev
+      automountServiceAccountToken: false
+      containers:
+        - image: nginx:1.28.0
+          name: nginx
+          ports:
+            - containerPort: 80
+          resources:
+            limits:
+              memory: 256Mi
+            requests:
+              memory: 128Mi
+              cpu: 75m
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 80
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 80
+            initialDelaySeconds: 15
+            periodSeconds: 20
