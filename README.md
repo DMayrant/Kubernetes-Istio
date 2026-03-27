@@ -1,4 +1,4 @@
-# Kubernetes-Istio
+# Kubernetes-Istio ☸️
 Istio uses an envoy proxy for a data plan deployed as sidecars alongside each application pod, these proxies handle all ingress and egress traffic enabling 
 
 - Observability 🔭
